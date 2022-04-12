@@ -3,9 +3,9 @@
 class Cart {
     constructor(elemCartCnt = '.xxxx', elemCartPrice = '.xxxx', elemCartList = '.xxxx', addToCartBtn = '.xxxx') {
         this._carObjt = { totalCnt: 0, totalPrice: 0, prods: [] };
-        this._cartCnt = document.querySelectorAll(elemCartCnt);
-        this._cartPrice = document.querySelectorAll(elemCartPrice);
-        this._cartList = document.querySelectorAll(elemCartList);
+        this._cartCnt = document.querySelector(elemCartCnt);
+        this._cartPrice = document.querySelector(elemCartPrice);
+        this._cartList = document.querySelector(elemCartList);
         this._addToCartBtn = document.querySelectorAll(addToCartBtn);
     }
 
