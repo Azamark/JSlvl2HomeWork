@@ -28,6 +28,7 @@ class ProductList {
         // this._render();
         this.getProducts()
             .then((data) => {
+                console.log(data);
                 this._goods = data;
                 this._render();
                 console.log(this.getTotalPrice());
@@ -66,8 +67,8 @@ class ProductList {
 
 class ProductItem {
     constructor(product, img = 'https://via.placeholder.com/200x150') {
-        this.id = product.id;
-        this.title = product.title;
+        this.id = product.id_product;
+        this.title = product.product_name;
         this.price = product.price;
         this.img = img;
     }
