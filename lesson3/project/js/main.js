@@ -1,5 +1,5 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-
+/**
 //getRequest на Promise
 let getRequest = (url) => { // не fetch
     return new Promise((resolve, reject) => {
@@ -17,6 +17,7 @@ let getRequest = (url) => { // не fetch
         xhr.send();
     });
 };
+*/
 
 class ProductList {
     constructor(container = '.products') {
@@ -85,6 +86,58 @@ class ProductItem {
     }
 }
 
+class Cart {
+    constructor() {
+
+    }
+
+    readJSON()
+}
+
+class CartItem {
+    constructor(item) {
+        this.id = item.id_product;
+        this.name = item.product_name;
+        this.cnt = item.product_cnt;
+        this.price = item.product_price;
+    }
+
+    getCartItemHTML() {
+        return `
+                <div class = "grid__item-name" data-id="${this.id}">
+                    <h4> ${this.name} </h4>
+                </div>
+                <div class = "grid__item-cnt" data-id="${this.id}">
+                    <span> ${this.cnt} </span>
+                </div>
+                <div class = "grid__item-price" data-id="${this.id}">
+                    <span> ${this.price} </span>
+                </div>
+                <div class = "grid__item-total-price" data-id="${this.id}">
+                    <span> ${this.price * this.cnt} </span>
+                </div>
+                <div class = "grid__btn-del" data-id="${this.id}">
+                    <button type="button"> X </button>
+                </div>
+                `
+    }
+}
+
 // const cart = new Cart();
 // const list = new ProductList(cart);
+
+let item = {
+    id_product: 1,
+    product_name: 'TestItem',
+    product_cnt: 0,
+    product_price: 100
+}
+
 const list = new ProductList();
+
+console.log(item);
+
+let cartItem = new CartItem(item)
+
+console.log(cartItem);
+console.log(cartItem.getCartItemHTML());
