@@ -1,5 +1,5 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-/**
+
 //getRequest на Promise
 let getRequest = (url) => { // не fetch
     return new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ let getRequest = (url) => { // не fetch
         xhr.send();
     });
 };
-*/
+
 
 class ProductList {
     constructor(container = '.products') {
@@ -76,10 +76,13 @@ class ProductItem {
 }
 
 class Cart {
-    constructor() {
+    constructor(cartBtn = ".btn-cart", cartBody = ".cart") {
         this.cartObj = {};
+        this.cartBtn = cartBtn;
+        this.cartBody = cartBody;
 
         this._readCartData();
+        this._switchCart();
     }
 
     readAPI(url) {
@@ -94,6 +97,16 @@ class Cart {
                 this.cartObj = data;
                 console.log(this.cartObj);
             })
+    }
+
+    _switchCart() {
+        document.querySelector(this.cartBtn).addEventListener('click', () => {
+            if (document.querySelector(this.cartBody).style.display !== "block") {
+                document.querySelector(this.cartBody).style.display = "block"
+            } else {
+                document.querySelector(this.cartBody).style.display = "none"
+            }
+        })
     }
 }
 
