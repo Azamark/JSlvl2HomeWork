@@ -25,8 +25,6 @@ class ProductList {
         this._goods = [];
         this._productsObjects = [];
 
-        // this._fetchGoods();
-        // this._render();
         this.getProducts()
             .then((data) => {
                 console.log(data);
@@ -35,15 +33,6 @@ class ProductList {
                 console.log(this.getTotalPrice());
             });
     }
-
-    // _fetchGoods() {
-    //     getRequest(`${API}/catalogData.json`, (data) => {
-    //         // console.log(data);
-    //         this._goods = JSON.parse(data);
-    //         this._render();
-    //         console.log(this._goods);
-    //     });
-    // }
 
     getProducts() {
         return fetch(`${API}/catalogData.json`)
@@ -88,10 +77,24 @@ class ProductItem {
 
 class Cart {
     constructor() {
+        this.cartObj = {};
 
+        this._readCartData();
     }
 
-    readJSON()
+    readAPI(url) {
+        return fetch(`${API + url}`)
+            .then(response => response.json())
+            .catch(err => console.log(err));
+    }
+
+    _readCartData() {
+        this.readAPI("/getBasket.json")
+            .then(data => {
+                this.cartObj = data;
+                console.log(this.cartObj);
+            })
+    }
 }
 
 class CartItem {
@@ -126,18 +129,7 @@ class CartItem {
 // const cart = new Cart();
 // const list = new ProductList(cart);
 
-let item = {
-    id_product: 1,
-    product_name: 'TestItem',
-    product_cnt: 0,
-    product_price: 100
-}
-
 const list = new ProductList();
 
-console.log(item);
+const cart = new Cart();
 
-let cartItem = new CartItem(item)
-
-console.log(cartItem);
-console.log(cartItem.getCartItemHTML());
