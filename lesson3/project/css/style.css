@@ -3,6 +3,7 @@ body {
 }
 
 header {
+    position: relative;
     display: flex;
     background-color: #2f2a2d;
     justify-content: space-between;
@@ -43,6 +44,27 @@ button {
 
 .cart {
     display: none;
+    background: #2f2a2d;
+
+    z-index: 4;
+    position: absolute;
+
+    top: 100px;
+    left: 800px;
+
+    max-width: max-content;
+    padding: 10px;
+}
+
+.cart-grid {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+    border-bottom: 1px solid #2f2a2d;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .products {
