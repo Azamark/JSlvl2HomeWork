@@ -27,6 +27,21 @@
         Two: 'I'll see you next time.'
         One: 'Sure.' Bye.'
     </p>
+
+    <p id='1'></p>
+    <p id='2'></p>
+    <script>
+        let textEl = document.querySelector('.origin');
+
+        // 1:
+        console.log(textEl.textContent.replace(/'/g, '"'));
+        document.getElementById('1').textContent = textEl.textContent.replace(/'/g, '"');
+
+        // 2:
+        console.log(textEl.textContent.replace(/\B'/g, '"'));
+        document.getElementById('2').textContent = textEl.textContent.replace(/\B'/g, '"');
+
+    </script>
 </body>
 
 </html>
