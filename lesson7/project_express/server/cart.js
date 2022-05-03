@@ -9,7 +9,7 @@ const change = (cart, req) => {
 };
 const del = (cart, req) => {
   const find = cart.contents.find(el => el.id_product === +req.params.id);
-  cart.contents.splice(cart.contents.IndexOf(find), 1);
+  cart.contents.splice(cart.contents.indexOf(find), 1);
   return JSON.stringify(cart, null, 4);
 };
 
