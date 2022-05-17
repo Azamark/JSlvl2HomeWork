@@ -4,8 +4,15 @@ const app = new Vue({
     el: '#app',
     data: {
         catalogUrl: '/catalogData.json',
+        cartAddUrl: '/addToBasket.json',
+        cartDelUrl: '/deleteFromBasket.json',
+        basketURL: '/getBasket.json',
         products: [],
-        imgCatalog: 'https://via.placeholder.com/200x150'
+        cartObj: {},
+        filter: [],
+        imgCatalog: 'https://via.placeholder.com/200x150',
+        searchLine: '',
+        cartHide: true,
     },
     methods: {
         getJson(url) {
@@ -16,39 +23,67 @@ const app = new Vue({
                 })
         },
         addProduct(product) {
-            console.log(product.id_product);
+            this.getJson(`${API + this.cartAddUrl}`)
+                .then(response => {
+                    if (response.result === 1) {
+                        let item = this.cartObj.contents.find(el => el.id_product === product.id_product);
+                        if (item) {
+                            item.quantity++;
+                        } else {
+                            //let newCartItem = product;
+                            //newCartItem.quantity = 1;
+                            //console.log(newCartItem);
+
+                            let newCartItem = Object.assign({ quantity: 1 }, product);
+                            this.cartObj.contents.push(newCartItem);
+                        }
+                    } else {
+                        console.log('Error');
+                    }
+                });
+        },
+        delProduct(item) {
+            console.log(item);
+            this.getJson(`${API + this.cartDelUrl}`)
+                .then(response => {
+                    if (response.result === 1) {
+                        if (item.quantity > 1) {
+                            item.quantity--;
+                        } else {
+                            this.cartObj.contents.splice(this.cartObj.contents.indexOf(item), 1);
+                        }
+                    } else {
+                        console.log('Error');
+                    }
+                });
+        },
+        filterGoods() {
+            let regexp = new RegExp(this.searchLine, "i");
+            if (regexp.test('')) {
+                alert("Введите название!!!");
+            } else {
+                if (this.products.find(el => regexp.test(el.product_name)) === undefined) {
+                    alert("Товар не найден!!!");
+                } else {
+                    this.filter = this.products.filter(el => regexp.test(el.product_name));
+                }
+            }
+        },
+        handleCartBtn() {
+            this.cartHide = !this.cartHide;
         }
     },
-    beforeCreate() {
-        console.log('beforeCreate');
-        console.log(this.products);
-    },
     created() {
-        console.log('created');
-        console.log(this.products);
+        this.getJson(`${API + this.basketURL}`)
+            .then(data => {
+                this.cartObj = data;
+            });
         this.getJson(`${API + this.catalogUrl}`)
             .then(data => {
                 for (let el of data) {
                     this.products.push(el);
+                    this.filter.push(el);
                 }
             });
-    },
-    beforeMount() {
-        console.log('beforeMount');
-    },
-    mounted() {
-        console.log('mounted');
-    },
-    beforeUpdate() {
-        console.log('beforeUpdate');
-    },
-    updated() {
-        console.log('updated');
-    },
-    beforeDestroy() {
-        console.log('beforeDestroy');
-    },
-    destroyed() {
-        console.log('destroyed');
     },
 });
