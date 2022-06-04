@@ -1,4 +1,4 @@
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/respones';
 
 const app = new Vue({
     el: '#app',
@@ -6,12 +6,11 @@ const app = new Vue({
         userSearch: '',
     },
     methods: {
-        getJson(url){
+        getJson(url) {
             return fetch(url)
                 .then(result => result.json())
                 .catch(error => {
-                    // show error component
-                    console.log(error);
+                    this.$refs.error.handleError(error);
                 })
         },
     },
@@ -19,4 +18,7 @@ const app = new Vue({
         console.log(this);
     }
 });
+
+
+
 

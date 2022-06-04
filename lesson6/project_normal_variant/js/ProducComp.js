@@ -1,5 +1,5 @@
 Vue.component('products', {
-    data(){
+    data() {
         return {
             catalogUrl: '/catalogData.json',
             products: [],
@@ -8,15 +8,26 @@ Vue.component('products', {
         }
     },
     methods: {
-        filter(search){
+        filter(search) {
             let regexp = new RegExp(search, 'i');
-            this.filtered = this.products.filter(el => regexp.test(el.product_name));
+            if (regexp.test('')) {
+                alert("Введите название!!!");
+            } else {
+                if (this.products.find(el => regexp.test(el.product_name)) === undefined) {
+                    alert("Товар не найден!!!");
+                } else {
+                    this.filtered = this.products.filter(el => regexp.test(el.product_name));
+                }
+            }
+        },
+        clearFilter() {
+            this.filtered = this.products;
         }
     },
-    mounted(){
+    mounted() {
         this.$parent.getJson(`${API + this.catalogUrl}`)
             .then(data => {
-                for(let el of data){
+                for (let el of data) {
                     this.products.push(el);
                     this.filtered.push(el);
                 }
@@ -38,7 +49,6 @@ Vue.component('product', {
                     <h3>{{product.product_name}}</h3>
                     <p>{{product.price}}₽</p>
                     <button class="buy-btn" @click="$root.$refs.cart.addProduct(product)">Купить</button>
-<!--                    <button class="buy-btn" @click="$parent.$parent.$refs.cart.addProduct(product)">Купить</button>-->
                 </div>
             </div>
     `
